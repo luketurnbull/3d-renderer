@@ -94,12 +94,29 @@ void render_color_buffer() {
   SDL_RenderCopy(renderer, color_buffer_texture, NULL, NULL);
 }
 
+void draw_grid(void) {
+  int gird_size = 10;
+
+  for (int y = 0; y < window_height; y++) {
+    bool is_line = y % gird_size == 0;
+    int multiplier = is_line ? 1 : gird_size;
+
+    for (int x = 0; x < window_width; x += multiplier) {
+
+      // Draw black
+      color_buffer[(window_width * y) + x] = 0xFFFFFFFF;
+    }
+  }
+}
+
 void render(void) {
   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
   SDL_RenderClear(renderer);
 
+  draw_grid();
+
   render_color_buffer();
-  clear_color_buffer(0xFFFFFF00);
+  // clear_color_buffer(0xFFFFFF00);
 
   SDL_RenderPresent(renderer);
 }
