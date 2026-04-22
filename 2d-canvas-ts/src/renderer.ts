@@ -11,11 +11,12 @@ export type Size = {
 export class Renderer {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
+  sizeObserver: ResizeObserver;
   size: Size = {
     width: window.innerWidth,
     height: window.innerHeight,
   };
-  sizeObserver: ResizeObserver;
+
   grid: Grid;
   rectangles: Rectangle[] = [];
 
