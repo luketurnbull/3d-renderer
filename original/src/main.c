@@ -1,4 +1,5 @@
 #include "display.h"
+#include "vector.h"
 #include <stdio.h>
 
 bool is_running = false;
@@ -38,9 +39,11 @@ void render(void) {
   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
   SDL_RenderClear(renderer);
 
+  vec2_t point = {.x = 300, .y = 300};
+
   // draw_grid();
   draw_rect(300, 20, 50, 60, 0xFFFF0000);
-  draw_pixel(300, 300, 0xFF00FF00);
+  draw_pixel(point.x, point.y, 0xFF00FF00);
 
   render_color_buffer();
   clear_color_buffer(0xFF000000);
