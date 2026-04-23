@@ -1,5 +1,6 @@
 import { Display } from "./display";
 import { Size } from "./size";
+import type { Vec2 } from "./vector";
 
 export class Renderer {
   canvas: HTMLCanvasElement;
@@ -27,7 +28,13 @@ export class Renderer {
     this.context.beginPath();
     this.display.draw_gird(30, "#2a2a2a")
     this.context.stroke();
-    this.display.draw_dot(10, 10);
+
+    const point: Vec2 = {
+      x: this.size.width / 2,
+      y: this.size.height / 2
+    };
+
+    this.display.draw_dot(point.x, point.y);
 
     requestAnimationFrame(() => this.update());
   }
