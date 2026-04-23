@@ -1,4 +1,5 @@
 #include "display.h"
+#include <stdint.h>
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
@@ -67,6 +68,12 @@ void draw_grid(void) {
       // Draw black
       color_buffer[(window_width * y) + x] = 0xFFFFFFFF;
     }
+  }
+}
+
+void draw_pixel(int x, int y, uint32_t color) {
+  if (x < window_width && y < window_height) {
+    color_buffer[(y * window_width) + x] = color;
   }
 }
 

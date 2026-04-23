@@ -11,6 +11,7 @@ export type Size = {
 export class Renderer {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
+  display: Display;
   sizeObserver: ResizeObserver;
   size: Size = {
     width: window.innerWidth,
@@ -31,24 +32,13 @@ export class Renderer {
 
     this.context = context;
 
+    this.display = new Display(this.context);
+
     this.grid = new Grid(this.context, {
       spacing: 30,
       colour: "#000000"
     });
 
-    for (let i = 0; i < 10; i++) {
-      this.rectangles.push(
-
-        new Rectangle(
-          this.context,
-          Math.random() * i * 100,
-          Math.random() * i * 100,
-          Math.random() * i * 100,
-          Math.random() * i * 100,
-          colours[Math.ceil(Math.random() * 10)]
-        )
-      )
-    }
 
     // Track window size change
     this.sizeObserver = new ResizeObserver((entries) => {
@@ -73,20 +63,28 @@ export class Renderer {
   }
 
   update() {
-    this.context.beginPath();
 
     // Add grid lines to the context buffer
+    this.context.beginPath();
     this.grid.draw(this.size);
-
     this.context.stroke();
-    // Add rectangle lines to the context buffer
-    for (const rectangle of this.rectangles) {
-      rectangle.draw();
 
-    }
+    this.display.draw_dot(10, 10);
 
 
     requestAnimationFrame(() => this.update());
   }
 }
 
+class Display {
+  context: CanvasRenderingContext2D;
+
+  constructor(context: CanvasRenderingContext2D) {
+    this.context = context;
+  }
+
+  draw_dot(x: number, y: number) {
+    this.context.fillStyle = "#ff0000";
+    this.context.fillRect(x, y, 5, 5);
+  }
+}
