@@ -19,7 +19,7 @@ export class Display {
     }
 
     this.context.fillStyle = "#ff0000";
-    this.context.fillRect(x, y, 5, 5);
+    this.context.fillRect(x + this.size.width / 2, y + this.size.height / 2, 5, 5);
   }
 
   draw_gird(spacing: number, colour: string) {

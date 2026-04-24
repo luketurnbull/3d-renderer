@@ -1,12 +1,16 @@
 import { Display } from "./display";
 import { Size } from "./size";
-import type { Vec2 } from "./vector";
+import type { Vec2, Vec3 } from "./vector";
+
+
+const FOV_FACTOR = 128;
 
 export class Renderer {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   display: Display;
   size: Size;
+  points: Vec3[] = [];
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -20,21 +24,43 @@ export class Renderer {
     this.size = new Size(this.canvas);
     this.display = new Display(this.context, this.size);
 
+    for (let x = -1; x < 1; x += 0.25) {
+      for (let y = -1; y < 1; y += 0.25) {
+        for (let z = -1; z < 1; z += 0.25) {
+          this.points.push({
+            x,
+            y,
+            z,
+          });
+
+        }
+      }
+    }
+
     this.update();
+  }
+
+
+  project(point: Vec3) {
+    const projected_point: Vec2 = {
+      x: point.x * FOV_FACTOR,
+      y: point.y * FOV_FACTOR
+    }
+
+    return projected_point;
   }
 
   update() {
     // Add grid lines to the context buffer
-    this.context.beginPath();
-    this.display.draw_gird(30, "#2a2a2a")
-    this.context.stroke();
+    // this.context.beginPath();
+    // this.display.draw_gird(30, "#2a2a2a");
+    // this.context.stroke();
+    for (const point of this.points) {
+      const projected_point = this.project(point);
+      this.display.draw_dot(projected_point.x, projected_point.y);
 
-    const point: Vec2 = {
-      x: this.size.width / 2,
-      y: this.size.height / 2
-    };
 
-    this.display.draw_dot(point.x, point.y);
+    }
 
     requestAnimationFrame(() => this.update());
   }
