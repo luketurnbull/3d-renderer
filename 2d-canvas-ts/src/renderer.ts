@@ -4,7 +4,11 @@ import type { Vec2, Vec3 } from "./vector";
 
 
 const FOV_FACTOR = 200;
-const CAMERA_POSITION = 2;
+const CAMERA_POSITION: Vec3 = {
+  x: 0,
+  y: 0,
+  z: -2
+};
 
 export class Renderer {
   canvas: HTMLCanvasElement;
@@ -43,13 +47,12 @@ export class Renderer {
 
 
   project(point: Vec3) {
-    const projected_x = point.x / (point.z + CAMERA_POSITION);
-    const projected_y = point.y / (point.z + CAMERA_POSITION);
+    const projected_x = (point.x * FOV_FACTOR) / point.z;
+    const projected_y = (point.y * FOV_FACTOR) / point.z;
 
     const projected_point: Vec2 = {
-      x: projected_x * FOV_FACTOR,
-
-      y: projected_y * FOV_FACTOR
+      x: projected_x,
+      y: projected_y
     };
 
     return projected_point;
@@ -60,8 +63,20 @@ export class Renderer {
     // this.context.beginPath();
     // this.display.draw_gird(30, "#2a2a2a");
     // this.context.stroke();
+    //
+    console.log(this.points[0].z);
     for (const point of this.points) {
-      const projected_point = this.project(point);
+
+      // Move point away from the camera
+      const newPoint: Vec3 = {
+        x: point.x,
+        y: point.y,
+        z: point.z - CAMERA_POSITION.z
+      };
+
+      const projected_point = this.project(newPoint);
+
+
       this.display.draw_dot(projected_point.x, projected_point.y);
 
 
