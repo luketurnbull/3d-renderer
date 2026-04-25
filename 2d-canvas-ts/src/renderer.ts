@@ -3,7 +3,8 @@ import { Size } from "./size";
 import type { Vec2, Vec3 } from "./vector";
 
 
-const FOV_FACTOR = 128;
+const FOV_FACTOR = 200;
+const CAMERA_POSITION = 2;
 
 export class Renderer {
   canvas: HTMLCanvasElement;
@@ -42,10 +43,14 @@ export class Renderer {
 
 
   project(point: Vec3) {
+    const projected_x = point.x / (point.z + CAMERA_POSITION);
+    const projected_y = point.y / (point.z + CAMERA_POSITION);
+
     const projected_point: Vec2 = {
-      x: point.x * FOV_FACTOR,
-      y: point.y * FOV_FACTOR
-    }
+      x: projected_x * FOV_FACTOR,
+
+      y: projected_y * FOV_FACTOR
+    };
 
     return projected_point;
   }
