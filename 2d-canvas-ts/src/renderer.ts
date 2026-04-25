@@ -3,11 +3,11 @@ import { Size } from "./size";
 import type { Vec2, Vec3 } from "./vector";
 
 
-const FOV_FACTOR = 200;
+const FOV_FACTOR = 640;
 const CAMERA_POSITION: Vec3 = {
   x: 0,
   y: 0,
-  z: -2
+  z: -5
 };
 
 export class Renderer {

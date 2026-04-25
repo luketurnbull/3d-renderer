@@ -6,8 +6,8 @@ const int N_POINTS = 9 * 9 * 9;
 vec3_t cube_points[N_POINTS];
 vec2_t projected_points[N_POINTS];
 
-float fov_factor = 120;
-vec3_t camera_position = {.x = 0, .y = 0, .z = 5};
+float fov_factor = 640;
+vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
 
 bool is_running = false;
 
