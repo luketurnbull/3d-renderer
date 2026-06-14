@@ -1,8 +1,7 @@
 #include "display.h"
 #include "vector.h"
-#include <stdio.h>
 
-const int N_POINTS = 9 * 9 * 9;
+#define N_POINTS (9 * 9 * 9)
 vec3_t cube_points[N_POINTS];
 vec2_t projected_points[N_POINTS];
 
